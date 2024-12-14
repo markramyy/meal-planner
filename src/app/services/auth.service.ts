@@ -1,21 +1,45 @@
 import { Injectable } from '@angular/core';
+import { FirebaseAuthService } from './firebase-auth.service';
+import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { Auth } from '@angular/fire/auth';
+import { BehaviorSubject } from 'rxjs';
+import { onAuthStateChanged } from 'firebase/auth';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private users: { fullName: string; email: string; password: string }[] = [];
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
 
-  login(email: string, password: string): boolean {
-    const user = this.users.find((u) => u.email === email && u.password === password);
-    return !!user;
+  constructor(private firebaseAuth: FirebaseAuthService, private firestore: Firestore, private auth: Auth) {
+    onAuthStateChanged(this.auth, (user) => {
+      this.isAuthenticatedSubject.next(!!user);
+    });
   }
 
-  signup(fullName: string, email: string, password: string): boolean {
-    if (this.users.some((u) => u.email === email)) {
-      return false; // User already exists
+  isAuthenticated(): boolean {
+    return this.isAuthenticatedSubject.value;
+  }
+
+  async signup(email: string, password: string, additionalData: any): Promise<void> {
+    try {
+      const userCredential = await this.firebaseAuth.signup(email, password);
+      const userId = userCredential.user?.uid;
+
+      if (userId) {
+        const userRef = doc(this.firestore, `users/${userId}`);
+        await setDoc(userRef, { ...additionalData, email, createdAt: new Date() });
+      }
+    } catch (error) {
+      throw error;
     }
-    this.users.push({ fullName, email, password });
-    return true;
+  }
+
+  login(email: string, password: string) {
+    return this.firebaseAuth.login(email, password);
+  }
+
+  logout(): Promise<void> {
+    return this.firebaseAuth.logout();
   }
 }
