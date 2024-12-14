@@ -1,0 +1,108 @@
+.sidebar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Keeps content distributed properly */
+    align-items: center; /* Centers items horizontally */
+    height: 98%; /* Full height relative to the screen */
+    width: 240px; /* Fixed width */
+    background-color: #ffffff;
+    border-right: 1px solid #e0e0e0;
+    padding: 1rem;
+
+    @media screen and (max-width: 768px) {
+        height: 98vh; /* Full viewport height for smaller devices */
+        width: 200px; /* Narrower sidebar on smaller screens */
+    }
+
+    .user-profile {
+        text-align: center;
+        margin-bottom: 2rem;
+        margin-top: 5rem;
+
+        img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%; /* Circular avatar */
+            margin-bottom: 0.5rem;
+            object-fit: cover; /* Ensures the image scales properly */
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #4caf50;
+            margin: 0;
+        }
+
+        p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+    }
+
+    .nav-links {
+        width: 100%;
+
+        ul {
+            list-style: none;
+            padding: 0;
+
+            li {
+                margin-bottom: 1rem;
+
+                a {
+                    display: flex;
+                    align-items: center;
+                    text-decoration: none;
+                    color: #333;
+                    font-size: 1rem;
+                    padding: 0.5rem 1rem;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease;
+
+                    .icon {
+                        font-size: 1.5rem;
+                        margin-right: 1rem;
+                        color: #4caf50;
+                    }
+
+                    &:hover,
+                    &.active {
+                        background-color: #f0fdf4;
+                        color: #4caf50;
+                    }
+                }
+            }
+        }
+    }
+
+    .logout {
+        margin: auto;
+        width: 100%;
+        text-align: center;
+
+        .logout-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #333;
+            font-size: 1rem;
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            background-color: #f9f9f9;
+            transition: background-color 0.3s ease, color 0.3s ease;
+
+            .icon {
+                font-size: 1.5rem;
+                margin-right: 2rem;
+                color: #4caf50;
+            }
+
+            &:hover {
+                background-color: #e0f7e8; /* Light green background */
+                color: #4caf50; /* Match hover color with icon */
+            }
+        }
+    }
+}

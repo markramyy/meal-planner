@@ -1,1 +1,47 @@
-<p>sidebar works!</p>
+<div class="sidebar-container">
+    <div class="user-profile">
+      <img src="assets/images/avatar.png" alt="User Photo" class="profile-photo" />
+      <h3>Hello! Michael!</h3>
+      <p>michaelwilson12.com</p>
+    </div>
+    <nav class="nav-links">
+      <ul>
+        <li>
+          <a routerLink="/dashboard" routerLinkActive="active">
+            <span class="icon material-icons">dashboard</span>
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a routerLink="/profile" routerLinkActive="active">
+            <span class="icon material-icons">person</span>
+            Your Profile
+          </a>
+        </li>
+        <li>
+          <a routerLink="/recipes" routerLinkActive="active">
+            <span class="icon material-icons">receipt_long</span>
+            Recipes
+          </a>
+        </li>
+        <li>
+          <a routerLink="/plans" routerLinkActive="active">
+            <span class="icon material-icons">calendar_today</span>
+            Plans
+          </a>
+        </li>
+        <li>
+          <a routerLink="/users" routerLinkActive="active">
+            <span class="icon material-icons">group</span>
+            Users
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div class="logout">
+      <a routerLink="/login" class="logout-button">
+        <span class="icon material-icons">logout</span>
+        Log out
+      </a>
+    </div>
+</div>
