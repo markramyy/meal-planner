@@ -1,1 +1,36 @@
-<p>signup works!</p>
+<div class="auth-container">
+  <div class="auth-left">
+    <h1>Meal Planner</h1>
+  </div>
+  <div class="auth-right">
+    <h2>SignUp</h2>
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Full Name</mat-label>
+        <input matInput placeholder="Enter your full name" formControlName="fullName" />
+        <mat-error *ngIf="signupForm.get('fullName')?.hasError('required')">Name is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email Address</mat-label>
+        <input matInput placeholder="Enter your email" formControlName="email" />
+        <mat-error *ngIf="signupForm.get('email')?.hasError('required')">Email is required</mat-error>
+        <mat-error *ngIf="signupForm.get('email')?.hasError('email')">Enter a valid email</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" placeholder="Enter your password" formControlName="password" />
+        <mat-error *ngIf="signupForm.get('password')?.hasError('required')">Password is required</mat-error>
+        <mat-error *ngIf="signupForm.get('password')?.hasError('minlength')">
+          Password must be at least 6 characters
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="full-width" [disabled]="signupForm.invalid">
+        Create your account
+      </button>
+    </form>
+    <p class="switching">Already have an account? <a routerLink="/login">Login</a></p>
+  </div>
+</div>

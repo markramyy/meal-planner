@@ -1,1 +1,28 @@
-<p>login works!</p>
+<div class="auth-container">
+  <div class="auth-left">
+    <h1>Meal Planner</h1>
+  </div>
+  <div class="auth-right">
+    <h2>Welcome Back!</h2>
+    <p>Login to get started</p>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email Address</mat-label>
+        <input matInput placeholder="Enter your email" formControlName="email" />
+        <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email is required</mat-error>
+        <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Enter a valid email</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" placeholder="Enter your password" formControlName="password" />
+        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="full-width" [disabled]="loginForm.invalid">
+        Login
+      </button>
+    </form>
+    <p class="switching">Don't have an account? <a routerLink="/signup">Sign Up</a></p>
+  </div>
+</div>
