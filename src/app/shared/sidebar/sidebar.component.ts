@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,5 +15,13 @@ import { CommonModule } from '@angular/common';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
+  constructor(private authService: AuthService, private router: Router) {}
 
+  logout(): void {
+    this.authService.logout().then(() => {
+      this.router.navigate(['/login']);
+    }).catch((error) => {
+      console.error('Logout failed', error);
+    });
+  }
 }
