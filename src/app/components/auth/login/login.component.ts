@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+
+import { AuthService } from '../../../services/auth.service';
 
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,6 +26,7 @@ import { RouterModule } from '@angular/router';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  errorMessage: string = '';
 
   constructor(private authService: AuthService, private router: Router) {
     this.loginForm = new FormGroup({
@@ -36,12 +38,12 @@ export class LoginComponent {
   onSubmit(): void {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      if (this.authService.login(email, password)) {
+      this.authService.login(email, password).then(() => {
         console.log('Login successful!');
-        this.router.navigate(['/dashboard']);
-      } else {
-        alert('Invalid credentials!');
-      }
+        this.router.navigate(['/profile']);
+      }).catch((error) => {
+        this.errorMessage = 'Invalid credentials!';
+      });
     }
   }
 }

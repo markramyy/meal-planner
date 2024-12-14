@@ -23,8 +23,8 @@
 
         h2 {
             color: #8bc34a;
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+            margin-bottom: 0.7rem;
             font-family: 'Arial', sans-serif;
         }
 
@@ -37,6 +37,15 @@
         form {
             display: flex;
             flex-direction: column;
+
+            .error-message {
+                color: #f44336;
+                margin: 0.5rem 0;
+                padding: 0.5rem;
+                border-radius: 4px;
+                background-color: #ffebee;
+                text-align: center;
+            }
 
             .full-width {
                 width: 100%;
@@ -84,6 +93,7 @@
         p {
             font-size: 1rem;
             color: #333;
+            margin-left: 0.5rem;
         }
 
         .switching {
