@@ -3,15 +3,21 @@
   height: 100vh;
 
   .auth-left {
-      flex: 1;
-      background-color: #8bc34a;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
+    flex: 1;
+    background-color: #8bc34a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 3rem;
+    font-family: 'Cursive', sans-serif;
+    padding: 2rem;
+
+    h1 {
       font-size: 3rem;
-      font-family: 'Cursive', sans-serif;
-      padding: 2rem;
+      font-weight: bold;
+      margin: 0;
+    }
   }
 
   .auth-right {
@@ -21,86 +27,137 @@
     justify-content: center;
     padding: 3rem;
 
-      h2 {
+    h2 {
+      color: #8bc34a;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      font-family: 'Arial', sans-serif;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      /* Styling for grouped form rows */
+      .form-row {
+        display: flex;
+        gap: 1rem;
+
+        .half-width {
+          width: calc(50% - 0.5rem); /* Each input takes 50% of the row width */
+        }
+      }
+
+      .full-width {
+        width: 100%;
+      }
+
+      /* Material Design form field styling */
+      mat-form-field {
+        background-color: #f9f9f9;
+        border-radius: 4px;
+        width: 100%;
+
+        mat-label {
           color: #8bc34a;
-          font-size: 3rem;
-          margin-bottom: 4rem;
-          font-family: 'Arial', sans-serif;
-      }
+          font-weight: bold;
+        }
 
-      p {
-          margin-bottom: 2rem;
-          font-size: 1.1rem;
-          color: #666;
-      }
+        input,
+        mat-select {
+          font-size: 1rem;
+          color: #333;
+        }
 
-      form {
-          display: flex;
-          flex-direction: column;
+        mat-error {
+          color: #f44336;
+          font-size: 0.9rem;
+          margin-top: 4px;
+        }
 
-          .full-width {
-              width: 100%;
-              margin-bottom: 1.5rem;
+        mat-select {
+          mat-option {
+            color: #333;
           }
-
-          mat-form-field {
-          background-color: #f9f9f9;
-          border-radius: 4px;
-          border: 1px solid #ccc;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-          padding-top: 1rem;
-
-              mat-label {
-                  color: #8bc34a;
-                  font-weight: bold;
-                  font-size: 1rem;
-              }
-
-              input {
-                  font-size: 1rem;
-                  color: #333;
-                  &::placeholder {
-                      color: #aaa;
-                      font-style: italic;
-                  }
-              }
-          }
+        }
       }
 
+      /* Button styling */
       button {
-          background-color: #8bc34a;
-          color: white;
-          font-size: 1rem;
-          padding: 0.8rem 0;
-          border-radius: 5px;
-          border: none;
-          cursor: pointer;
-          margin-top: 1rem;
-          &:hover {
-              background-color: #4caf50;
-          }
-      }
+        background-color: #8bc34a;
+        color: white;
+        padding: 0.8rem 0;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
 
-      p {
-          font-size: 1rem;
-          color: #333;
-      }
+        &:hover {
+          background-color: #4caf50;
+        }
 
-      .switching {
-          margin-top: 1.5rem;
-          text-align: center;
-          font-size: 1rem;
-          color: #333;
+        &:disabled {
+          background-color: #c8e6c9;
+          cursor: not-allowed;
+        }
       }
+    }
+
+    /* Switching text and login link */
+    .switching {
+      margin-top: 1.5rem;
+      text-align: center;
+      color: #333;
 
       a {
         color: #3f51b5;
         text-decoration: none;
         font-weight: bold;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .auth-container {
+    flex-direction: column;
+
+    .auth-left {
+      height: 40vh;
+    }
+
+    .auth-right {
+      height: 60vh;
+      padding: 2rem;
+
+      h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
       }
 
-      a:hover {
-        text-decoration: underline;
+      form {
+        gap: 1rem;
+
+        .form-row {
+          flex-direction: column;
+
+          .half-width {
+            width: 100%;
+          }
+        }
       }
+
+      button {
+        font-size: 0.9rem;
+        padding: 0.6rem 0;
+      }
+    }
   }
 }

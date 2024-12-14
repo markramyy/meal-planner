@@ -3,20 +3,58 @@
     <h1>Meal Planner</h1>
   </div>
   <div class="auth-right">
-    <h2>SignUp</h2>
+    <h2>Sign Up</h2>
     <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Full Name</mat-label>
-        <input matInput placeholder="Enter your full name" formControlName="fullName" />
-        <mat-error *ngIf="signupForm.get('fullName')?.hasError('required')">Name is required</mat-error>
-      </mat-form-field>
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>First Name</mat-label>
+          <input matInput placeholder="Enter your first name" formControlName="firstName" />
+          <mat-error *ngIf="signupForm.get('firstName')?.hasError('required')">First Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Last Name</mat-label>
+          <input matInput placeholder="Enter your last name" formControlName="lastName" />
+          <mat-error *ngIf="signupForm.get('lastName')?.hasError('required')">Last Name is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Username</mat-label>
+          <input matInput placeholder="Choose a username" formControlName="username" />
+          <mat-error *ngIf="signupForm.get('username')?.hasError('required')">Username is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Phone</mat-label>
+          <input matInput placeholder="Enter your phone number" formControlName="phone" />
+          <mat-error *ngIf="signupForm.get('phone')?.hasError('required')">Phone is required</mat-error>
+        </mat-form-field>
+      </div>
 
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Email Address</mat-label>
+        <mat-label>Email</mat-label>
         <input matInput placeholder="Enter your email" formControlName="email" />
         <mat-error *ngIf="signupForm.get('email')?.hasError('required')">Email is required</mat-error>
         <mat-error *ngIf="signupForm.get('email')?.hasError('email')">Enter a valid email</mat-error>
       </mat-form-field>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Gender</mat-label>
+          <input matInput placeholder="Enter your gender" formControlName="gender" />
+          <mat-error *ngIf="signupForm.get('gender')?.hasError('required')">Gender is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput [matDatepicker]="picker" placeholder="DD/MM/YYYY" formControlName="dateOfBirth" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="signupForm.get('dateOfBirth')?.hasError('required')">Date of Birth is required</mat-error>
+        </mat-form-field>
+      </div>
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Password</mat-label>
@@ -28,7 +66,7 @@
       </mat-form-field>
 
       <button mat-raised-button color="primary" class="full-width" [disabled]="signupForm.invalid">
-        Create your account
+        Sign Up
       </button>
     </form>
     <p class="switching">Already have an account? <a routerLink="/login">Login</a></p>
