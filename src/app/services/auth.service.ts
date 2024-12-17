@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FirebaseAuthService } from './firebase-auth.service';
-import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -41,5 +41,22 @@ export class AuthService {
 
   logout(): Promise<void> {
     return this.firebaseAuth.logout();
+  }
+
+  // Fetch the current authenticated user's data from Firestore
+  async getUserData(): Promise<any> {
+    const currentUser = this.auth.currentUser;
+    if (!currentUser) {
+      throw new Error('User not authenticated');
+    }
+
+    const userRef = doc(this.firestore, `users/${currentUser.uid}`);
+    const userDoc = await getDoc(userRef);
+
+    if (userDoc.exists()) {
+      return userDoc.data();
+    } else {
+      throw new Error('User data not found');
+    }
   }
 }

@@ -1,24 +1,30 @@
 <div class="profile-container">
-    <app-sidebar></app-sidebar>
-    <div class="profile-content">
-      <div class="header-container">
-        <h1>User Personal Informations</h1>
+  <app-sidebar></app-sidebar>
+  <div class="profile-content">
+    <div class="header-container">
+      <h1>User Personal Information</h1>
     </div>
-    <div class="profile-card">
-        <button class="save-button">+ Save</button>
-        <div class="profile-photo-container">
-            <img src="assets/images/avatar.png" alt="User Photo" class="profile-photo" />
-            <h2>John Lane</h2>
-            <p class="username">ohnlane123</p>
-        </div>
-        <div class="user-info">
-            <ul>
-              <li><span class="label">Email:</span> <span class="value">johnlane123gmail.com</span></li>
-              <li><span class="label">Phone:</span> <span class="value">+1 123 456 7890</span></li>
-              <li><span class="label">Gender:</span> <span class="value">Male</span></li>
-              <li><span class="label">Date of Birth:</span> <span class="value">June 21, 1989</span></li>
-            </ul>
-        </div>
+    <div class="profile-card" *ngIf="!loading && userData; else loadingTemplate">
+      <button class="save-button">+ Save</button>
+      <div class="profile-photo-container">
+        <img src="assets/images/avatar.png" alt="User Photo" class="profile-photo" />
+        <h2>{{ userData.firstName }} {{ userData.lastName }}</h2>
+        <p class="username">{{ userData.username }}</p>
+      </div>
+      <div class="user-info">
+        <ul>
+          <li><span class="label">Email:</span> <span class="value">{{ userData.email }}</span></li>
+          <li><span class="label">Phone:</span> <span class="value">{{ userData.phone }}</span></li>
+          <li><span class="label">Gender:</span> <span class="value">{{ userData.gender }}</span></li>
+          <li><span class="label">Date of Birth:</span> <span class="value">{{ userData.dateOfBirth | date:'mediumDate' }}</span></li>
+        </ul>
       </div>
     </div>
+    <ng-template #loadingTemplate>
+      <div class="loading-container">
+        <p>Loading user data...</p>
+      </div>
+    </ng-template>
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  </div>
 </div>
