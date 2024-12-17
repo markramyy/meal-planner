@@ -1,0 +1,94 @@
+.users-page-container {
+    display: flex;
+    height: 100vh;
+
+    app-sidebar {
+      flex: 0 0 240px;
+      border-right: 1px solid #e0e0e0;
+      background-color: #fff;
+      box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .users-container {
+      flex: 1;
+      padding: 2rem;
+
+      h2 {
+        margin-bottom: 1rem;
+        font-size: 1.8rem;
+        color: #333;
+      }
+
+      .search-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1.5rem;
+
+        input {
+          width: 300px;
+          padding: 0.5rem 1rem;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          font-size: 1rem;
+          outline: none;
+
+          &:focus {
+            border-color: #8bc34a;
+            box-shadow: 0 0 5px rgba(139, 195, 74, 0.5);
+          }
+        }
+      }
+
+      .users-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+
+        .user-card {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background: #fff;
+          border: 1px solid #e0e0e0;
+          border-radius: 8px;
+          padding: 1rem 1.5rem;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+          .user-info {
+            h3 {
+              margin: 0;
+              font-size: 1.1rem;
+              color: #333;
+              font-weight: bold;
+            }
+
+            p {
+              margin: 0.2rem 0 0;
+              font-size: 0.9rem;
+              color: #666;
+            }
+          }
+
+          .add-button {
+            background-color: #8bc34a;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+              background-color: #4caf50;
+            }
+
+            &:disabled {
+              background-color: #ccc;
+              cursor: not-allowed;
+            }
+          }
+        }
+      }
+    }
+}

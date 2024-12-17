@@ -1,1 +1,43 @@
-<p>users works!</p>
+<div class="users-page-container">
+    <!-- Sidebar -->
+    <app-sidebar></app-sidebar>
+
+    <!-- Main Users Content -->
+    <div class="users-container" *ngIf="!loading; else loadingTemplate">
+      <h2>Follow Users</h2>
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input
+          type="text"
+          placeholder="Search users by name or email"
+          [(ngModel)]="searchTerm"
+          (input)="onSearch()"
+        />
+      </div>
+
+      <!-- Users List -->
+      <div class="users-list">
+        <div *ngFor="let user of filteredUsers" class="user-card">
+          <div class="user-info">
+            <h3>{{ user.firstName }} {{ user.lastName }}</h3>
+            <p>{{ user.email }}</p>
+          </div>
+          <button
+            class="add-button"
+            (click)="onFollow(user)"
+            [disabled]="user.email === currentUserEmail"
+          >
+            + Add
+          </button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Loading Template -->
+<ng-template #loadingTemplate>
+<div class="loading-container">
+    <p>Loading users...</p>
+</div>
+</ng-template>

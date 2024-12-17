@@ -59,4 +59,9 @@ export class AuthService {
       throw new Error('User data not found');
     }
   }
+
+  getCurrentUserEmail(): string | null {
+    return this.auth.currentUser ? this.auth.currentUser.email : null;
+  }
+
 }
