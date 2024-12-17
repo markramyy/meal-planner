@@ -51,7 +51,6 @@ export class SignupComponent {
       this.authService
         .signup(email, password, additionalData)
         .then(() => {
-          console.log('Signup successful!');
           this.router.navigate(['/login']);
         })
         .catch((error) => {

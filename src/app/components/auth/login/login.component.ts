@@ -39,7 +39,6 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).then(() => {
-        console.log('Login successful!');
         this.router.navigate(['/profile']);
       }).catch((error) => {
         this.errorMessage = 'Invalid credentials!';
