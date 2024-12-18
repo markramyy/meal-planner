@@ -4,16 +4,18 @@
 
     <!-- Main Users Content -->
     <div class="users-container" *ngIf="!loading; else loadingTemplate">
-      <h2>Follow Users</h2>
+      <div class="users-header">
+        <h1 class="title">Follow Users</h1>
 
-      <!-- Search Bar -->
-      <div class="search-container">
-        <input
-          type="text"
-          placeholder="Search users by name or email"
-          [(ngModel)]="searchTerm"
-          (input)="onSearch()"
-        />
+        <!-- Search Bar -->
+        <div class="search-container">
+          <input
+            type="text"
+            placeholder="Search users by name or email"
+            [(ngModel)]="searchTerm"
+            (input)="onSearch()"
+          />
+        </div>
       </div>
 
       <!-- Users List -->

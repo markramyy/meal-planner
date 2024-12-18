@@ -13,31 +13,39 @@
       flex: 1;
       padding: 2rem;
 
-      h2 {
-        margin-bottom: 1rem;
-        font-size: 1.8rem;
-        color: #333;
-      }
-
-      .search-container {
+      .users-header {
         display: flex;
-        justify-content: flex-end;
-        margin-bottom: 1.5rem;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+        background-color: #ffffff;
+        padding: 1rem 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-        input {
-          width: 300px;
-          padding: 0.5rem 1rem;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          font-size: 1rem;
-          outline: none;
+        .title {
+          font-size: 1.5rem;
+          color: #333;
+          margin: 0;
+        }
 
-          &:focus {
-            border-color: #8bc34a;
-            box-shadow: 0 0 5px rgba(139, 195, 74, 0.5);
+        .search-container {
+          input {
+            width: 350px;
+            padding: 0.5rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            outline: none;
+
+            &:focus {
+              border-color: #8bc34a;
+              box-shadow: 0 0 5px rgba(139, 195, 74, 0.5);
+            }
           }
         }
       }
+
 
       .users-list {
         display: grid;
