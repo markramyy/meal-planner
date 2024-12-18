@@ -1,0 +1,267 @@
+.plans-page-container {
+    display: flex;
+    height: 98vh;
+
+    app-sidebar {
+      flex: 0 0 240px;
+      border-right: 1px solid #e0e0e0;
+      background-color: #fff;
+    }
+
+    .plans-container {
+        flex: 1;
+        padding: 2rem;
+        display: flex;
+        justify-content: center;
+
+        .no-plans {
+            text-align: center;
+
+            img {
+                max-width: 150px;
+                margin-bottom: 1rem;
+            }
+
+            h2 {
+                color: #333;
+                font-size: 1.5rem;
+            }
+
+            p {
+                color: #666;
+                margin-bottom: 1rem;
+            }
+
+            button {
+                background-color: #8bc34a;
+                color: #fff;
+                padding: 0.8rem 1.5rem;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #4caf50;
+                }
+            }
+        }
+
+        .add-plan-form {
+            width: 100%;
+
+            .form-header {
+                margin-bottom: 2rem;
+                background-color: #ffffff;
+                padding: 1rem 2rem;
+                border-radius: 10px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+                h1 {
+                    font-size: 1.5rem;
+                    color: #333;
+                    margin: 0;
+                }
+            }
+
+            .form-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                background-color: #ffffff;
+                border-radius: 10px;
+                padding: 2rem;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                margin: auto;
+                height: 70%;
+                width: 60%;
+
+                .input-title {
+                    padding: 0.8rem;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    font-size: 1rem;
+                    margin-bottom: 2rem;
+                    width: 100%;
+                }
+
+                .section-container {
+                    margin-bottom: 1.5rem;
+
+                    h3 {
+                        font-size: 1.2rem;
+                        color: #333;
+                        margin-bottom: 0.8rem;
+                    }
+
+                    .days-selection,
+                    .meals-selection {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 0.8rem;
+
+                        label {
+                            display: flex;
+                            align-items: center;
+
+                            input {
+                                display: none;
+                            }
+
+                            .day-chip,
+                            .meal-chip {
+                                display: inline-flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                background-color: #8bc34a;
+                                color: white;
+                                padding: 0.5rem 1rem;
+                                border-radius: 20px;
+                                font-size: 0.9rem;
+                                font-weight: bold;
+
+                                .close-icon {
+                                    margin-left: 0.5rem;
+                                    font-weight: normal;
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .submit-container {
+                    display: flex;
+                    justify-content: center;
+                    margin-top: 1.5rem;
+
+                    .create-button {
+                        background-color: #8bc34a;
+                        color: white;
+                        border: none;
+                        border-radius: 5px;
+                        padding: 0.8rem 2rem;
+                        font-size: 1.1rem;
+                        cursor: pointer;
+                        transition: background-color 0.3s;
+
+                        &:hover {
+                            background-color: #4caf50;
+                        }
+                    }
+                }
+            }
+        }
+
+        .existing-plans {
+            width: 100%;
+
+            .plans-header {
+                align-items: center;
+                margin-bottom: 2rem;
+                background-color: #ffffff;
+                padding: 1rem 2rem;
+                border-radius: 10px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                display: flex;
+                justify-content: space-between;
+
+                h1 {
+                    font-size: 1.5rem;
+                    color: #333;
+                    margin: 0;
+                }
+
+                .plan-count {
+                    color: #888;
+                    font-size: 0.9rem;
+                    margin-top: 0.3rem;
+                }
+
+                button {
+                    background-color: #8bc34a;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    padding: 0.5rem 1.2rem;
+                    font-size: 1rem;
+                    cursor: pointer;
+
+                    &:hover {
+                    background-color: #4caf50;
+                    }
+                }
+            }
+
+            .days-tabs {
+              display: flex;
+              justify-content: space-around;
+              margin-bottom: 2rem;
+              background: #95c34c;
+              border-radius: 10px;
+
+              span {
+                cursor: pointer;
+                padding: 0.8rem 1.5rem;
+                border-radius: 5px;
+                font-weight: bold;
+                color: #333;
+                background-color: #95c34c;
+                transition: background-color 0.3s ease;
+
+                &.active {
+                  background-color: #8bc34a;
+                  color: white;
+                }
+
+                &:hover {
+                  color: white;
+                }
+              }
+            }
+
+            .plans-list {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                background-color: #ffffff;
+                padding: 1rem 2rem;
+                border-radius: 10px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+
+                .plan-card {
+                    display: flex;
+                    align-items: center;
+                    background-color: #fff;
+                    border: 1px solid #e0e0e0;
+                    border-radius: 10px;
+                    padding: 1rem;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+                    .plan-icon {
+                        margin-right: 1rem;
+
+                        img {
+                            width: 40px;
+                            height: 40px;
+                        }
+                    }
+
+                    .plan-details {
+                        h3 {
+                            margin: 0;
+                            color: #333;
+                            font-size: 1.2rem;
+                        }
+
+                        p {
+                            margin: 0.3rem 0 0;
+                            color: #777;
+                            font-size: 0.9rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,1 +1,105 @@
-<p>plans works!</p>
+<div class="plans-page-container">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Main Content -->
+  <div class="plans-container" *ngIf="!loading; else loadingTemplate">
+    <!-- No Plans State -->
+    <div *ngIf="plans.length === 0 && !showAddPlanForm" class="no-plans">
+      <img src="assets/images/no-plans.png" alt="No Plans" />
+      <h2>No Plans</h2>
+      <p>Looks like you haven't added any plans yet.</p>
+      <button (click)="toggleAddPlanForm()">+ Add plans</button>
+    </div>
+
+    <!-- Add Plan Form -->
+    <div *ngIf="showAddPlanForm" class="add-plan-form">
+        <!-- Title -->
+        <div class="form-header">
+          <h1>Add New Plan</h1>
+        </div>
+
+        <!-- Add Plan Form -->
+        <form (ngSubmit)="savePlan()" class="form-container">
+          <!-- Plan Title -->
+          <input
+            type="text"
+            placeholder="Enter title"
+            [(ngModel)]="newPlan.title"
+            name="title"
+            required
+            class="input-title"
+          />
+
+          <!-- Days Selection -->
+          <div class="section-container">
+            <h3>Days</h3>
+            <div class="days-selection">
+              <label *ngFor="let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']">
+                <input type="checkbox" [(ngModel)]="newPlan.days" name="days" [value]="day" />
+                <span class="day-chip">{{ day }} <span class="close-icon">✖</span></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Meals Selection -->
+          <div class="section-container">
+            <h3>Meals</h3>
+            <div class="meals-selection">
+              <label *ngFor="let meal of ['Breakfast', 'Snack-1', 'Lunch', 'Snack-2', 'Dinner', 'Snack-3']">
+                <input type="checkbox" [(ngModel)]="newPlan.meals" name="meals" [value]="meal" />
+                <span class="meal-chip">{{ meal }} <span class="close-icon">✖</span></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="submit-container">
+            <button type="submit" class="create-button">Create Plan</button>
+          </div>
+        </form>
+    </div>
+
+    <!-- Existing Plans Section -->
+    <div *ngIf="plans.length > 0 && !showAddPlanForm" class="existing-plans">
+      <!-- Header -->
+      <div class="plans-header">
+        <div>
+          <h1>Add Plan</h1>
+          <p class="plan-count">{{ plans.length }} plans</p>
+        </div>
+        <button (click)="toggleAddPlanForm()">+ Add plan</button>
+      </div>
+
+      <!-- Day Filter Tabs -->
+      <div class="days-tabs">
+        <span
+          *ngFor="let day of daysOfWeek"
+          (click)="filterByDay(day)"
+          [class.active]="selectedDay === day">
+          {{ day }}
+        </span>
+      </div>
+
+      <!-- Plans List -->
+      <div class="plans-list">
+        <div *ngFor="let plan of filteredPlans" class="plan-card">
+          <div class="plan-icon">
+            <img src="assets/images/plan-icon.png" alt="Plan Icon" />
+          </div>
+          <div class="plan-details">
+            <h3>{{ plan.title }}</h3>
+            <p>Last edit was {{ plan.updatedAt | date:'medium' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Template -->
+  <ng-template #loadingTemplate>
+    <div class="loading">
+      <p>Loading plans...</p>
+    </div>
+  </ng-template>
+</div>
