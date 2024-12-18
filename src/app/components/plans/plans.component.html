@@ -6,7 +6,7 @@
   <div class="plans-container" *ngIf="!loading; else loadingTemplate">
     <!-- No Plans State -->
     <div *ngIf="plans.length === 0 && !showAddPlanForm" class="no-plans">
-      <img src="assets/images/no-plans.png" alt="No Plans" />
+      <img src="assets/images/empty-card.png" alt="No Plans" />
       <h2>No Plans</h2>
       <p>Looks like you haven't added any plans yet.</p>
       <button (click)="toggleAddPlanForm()">+ Add plans</button>

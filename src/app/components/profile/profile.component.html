@@ -5,7 +5,6 @@
       <h1>User Personal Information</h1>
     </div>
     <div class="profile-card" *ngIf="!loading && userData; else loadingTemplate">
-      <button class="save-button">+ Save</button>
       <div class="profile-photo-container">
         <img src="assets/images/avatar.png" alt="User Photo" class="profile-photo" />
         <h2>{{ userData.firstName }} {{ userData.lastName }}</h2>

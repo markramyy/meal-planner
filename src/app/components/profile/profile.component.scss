@@ -38,23 +38,6 @@
             margin: auto;
             height: 70%;
 
-            .save-button {
-                background-color: #8bc34a;
-                color: white;
-                border: none;
-                padding: 0.8rem 1.2rem;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 1rem;
-                font-weight: bold;
-                margin-left: auto;
-                transition: background-color 0.3s ease;
-
-                &:hover {
-                    background-color: #4caf50;
-                }
-            }
-
             .profile-photo-container {
                 position: relative;
                 margin-bottom: 4rem;
