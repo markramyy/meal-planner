@@ -18,14 +18,14 @@ export class RecipeService {
     }
   }
 
-  async getRecipes() {
+  async getRecipes(): Promise<Recipe[]> {
     try {
       const recipesCollection = collection(this.firestore, 'recipes');
       const querySnapshot = await getDocs(recipesCollection);
       return querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
-      }));
+      } as Recipe));
     } catch (error) {
       console.error('Error getting recipes:', error);
       throw error;

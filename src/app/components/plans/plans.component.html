@@ -14,50 +14,57 @@
 
     <!-- Add Plan Form -->
     <div *ngIf="showAddPlanForm" class="add-plan-form">
-        <!-- Title -->
-        <div class="form-header">
+      <div class="form-header">
           <h1>Add New Plan</h1>
-        </div>
+      </div>
 
-        <!-- Add Plan Form -->
-        <form (ngSubmit)="savePlan()" class="form-container">
-          <!-- Plan Title -->
+      <form (ngSubmit)="savePlan()" class="form-container">
           <input
-            type="text"
-            placeholder="Enter title"
-            [(ngModel)]="newPlan.title"
-            name="title"
-            required
-            class="input-title"
+              type="text"
+              placeholder="Enter title"
+              [(ngModel)]="newPlan.title"
+              name="title"
+              required
+              class="input-title"
           />
 
-          <!-- Days Selection -->
-          <div class="section-container">
-            <h3>Days</h3>
-            <div class="days-selection">
-              <label *ngFor="let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']">
-                <input type="checkbox" [(ngModel)]="newPlan.days" name="days" [value]="day" />
-                <span class="day-chip">{{ day }} <span class="close-icon">✖</span></span>
-              </label>
+          <div class="recipe-selection">
+              <select [(ngModel)]="selectedMealType" name="mealType" (change)="onMealTypeChange()">
+                  <option value="">Select Meal Type</option>
+                  <option *ngFor="let type of mealTypes" [value]="type">{{type}}</option>
+              </select>
+
+              <select [(ngModel)]="selectedRecipe" name="recipe">
+                  <option value="">Choose Recipe</option>
+                  <option *ngFor="let recipe of filteredRecipes" [value]="recipe.id">{{recipe.title}}</option>
+              </select>
+
+              <button type="button" (click)="addRecipeToPlan()">Add Recipe</button>
+          </div>
+
+          <div class="selected-recipes" *ngIf="newPlan?.recipes && newPlan.recipes.length > 0">
+            <h3>Selected Recipes</h3>
+            <div class="recipe-list">
+              <div *ngFor="let recipe of newPlan.recipes" class="recipe-item">
+                <span>{{recipe.recipeName}} ({{recipe.mealType}})</span>
+                <button type="button" (click)="removeRecipe(recipe)">✕</button>
+              </div>
             </div>
           </div>
 
-          <!-- Meals Selection -->
           <div class="section-container">
-            <h3>Meals</h3>
-            <div class="meals-selection">
-              <label *ngFor="let meal of ['Breakfast', 'Snack-1', 'Lunch', 'Snack-2', 'Dinner', 'Snack-3']">
-                <input type="checkbox" [(ngModel)]="newPlan.meals" name="meals" [value]="meal" />
-                <span class="meal-chip">{{ meal }} <span class="close-icon">✖</span></span>
-              </label>
-            </div>
+              <div class="days-selection">
+                  <label *ngFor="let day of daysOfWeek">
+                      <input type="checkbox" (change)="onDaySelect($event)" [value]="day" />
+                      <span class="day-chip">{{ day }}</span>
+                  </label>
+              </div>
           </div>
 
-          <!-- Submit Button -->
           <div class="submit-container">
-            <button type="submit" class="create-button">Create Plan</button>
+              <button type="submit" [disabled]="!isFormValid()" class="create-button">Create Plan</button>
           </div>
-        </form>
+      </form>
     </div>
 
     <!-- Existing Plans Section -->

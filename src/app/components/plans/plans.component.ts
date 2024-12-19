@@ -4,7 +4,10 @@ import { FormsModule } from '@angular/forms';
 
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { PlanService } from '../../services/plan.service';
-import { Plan } from '../../models/plan.model';
+import { RecipeService } from '../../services/recipe.service';
+import { AuthService } from '../../services/auth.service';
+import { Plan, PlanRecipe } from '../../models/plan.model';
+import { Recipe } from '../../models/recipe.model';
 
 @Component({
   selector: 'app-plans',
@@ -22,15 +25,65 @@ export class PlansComponent implements OnInit {
   plans: Plan[] = [];
   filteredPlans: Plan[] = [];
   showAddPlanForm: boolean = false;
-  newPlan: Plan = { title: '', days: [], meals: [] };
   loading: boolean = true;
+  newPlan!: Plan;
 
-  daysOfWeek: string[] = ['All', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  selectedMealType: string = '';
+  selectedRecipe: string = '';
+  filteredRecipes: Recipe[] = [];
+  allRecipes: Recipe[] = [];
+
+  readonly mealTypes: string[] = ['Breakfast', 'Lunch', 'Dinner', 'Desert', 'Snack'];
+  readonly daysOfWeek: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   selectedDay: string = 'All';
 
-  // constructor(private planService: PlanService) {}
+  constructor(
+    private planService: PlanService,
+    private recipeService: RecipeService,
+    private authService: AuthService
+  ) {}
 
-  constructor() {}
+  async ngOnInit(): Promise<void> {
+    this.initializeNewPlan();
+    await this.loadPlans();
+    await this.loadRecipes();
+  }
+
+  private initializeNewPlan(): void {
+    const userId = this.authService.getCurrentUserId();
+    if (!userId) {
+      throw new Error('User must be authenticated');
+    }
+
+    this.newPlan = {
+      title: '',
+      days: [],
+      recipes: [],
+      userId: userId
+    };
+  }
+
+  async loadRecipes(): Promise<void> {
+    try {
+      const recipes = await this.recipeService.getRecipes();
+      this.allRecipes = recipes;
+    } catch (error) {
+      console.error('Error loading recipes:', error);
+      this.allRecipes = [];
+    }
+  }
+
+  async loadPlans(): Promise<void> {
+    try {
+      const userId = this.authService.getCurrentUserId();
+      if (userId) {
+        this.plans = await this.planService.getUserPlans(userId);
+        this.filteredPlans = [...this.plans];
+      }
+    } finally {
+      this.loading = false;
+    }
+  }
 
   filterByDay(day: string): void {
     this.selectedDay = day;
@@ -41,81 +94,76 @@ export class PlansComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    this.loadPlans();
-  }
-
-  async getAllPlans(): Promise<Plan[]> {
-    return [
-      {
-        title: 'Low Carb Meal Plan',
-        days: ['Monday', 'Wednesday', 'Friday'],
-        meals: ['Breakfast', 'Lunch', 'Dinner'],
-        updatedAt: new Date()
-      },
-      {
-        title: 'Weekly Healthy Meals',
-        days: ['Tuesday', 'Thursday'],
-        meals: ['Breakfast', 'Snack-1', 'Dinner'],
-        updatedAt: new Date('2024-12-14')
-      },
-      {
-        title: 'Weekly Healthy Meals',
-        days: ['Tuesday', 'Thursday'],
-        meals: ['Breakfast', 'Snack-1', 'Dinner'],
-        updatedAt: new Date('2024-12-14')
-      },
-      {
-        title: 'Weekly Healthy Meals',
-        days: ['Tuesday', 'Thursday'],
-        meals: ['Breakfast', 'Snack-1', 'Dinner'],
-        updatedAt: new Date('2024-12-14')
-      },
-      {
-        title: 'Weight Loss Plan',
-        days: ['Saturday', 'Sunday'],
-        meals: ['Breakfast', 'Lunch', 'Snack-2'],
-        updatedAt: new Date('2024-12-15')
-      }
-    ];
-  }
-
-  async loadPlans(): Promise<void> {
-    try {
-      this.plans = await this.getAllPlans();
-      this.filteredPlans = [...this.plans];
-      this.loading = false;
-    } catch (error) {
-      console.error('Failed to load plans', error);
-      this.loading = false;
+  onMealTypeChange() {
+    if (this.selectedMealType) {
+      this.filteredRecipes = this.allRecipes.filter(recipe =>
+        recipe.mealType.includes(this.selectedMealType)
+      );
     }
+  }
+
+  addRecipeToPlan() {
+    if (this.selectedMealType && this.selectedRecipe) {
+      const recipe = this.allRecipes.find(r => r.id === this.selectedRecipe);
+      if (recipe) {
+        this.newPlan.recipes.push({
+          mealType: this.selectedMealType,
+          recipeId: recipe.id!,
+          recipeName: recipe.title
+        });
+      }
+      // Reset selections
+      this.selectedMealType = '';
+      this.selectedRecipe = '';
+      this.filteredRecipes = [];
+    }
+  }
+
+  removeRecipe(recipe: PlanRecipe) {
+    const index = this.newPlan.recipes.indexOf(recipe);
+    if (index > -1) {
+      this.newPlan.recipes.splice(index, 1);
+    }
+  }
+
+  onDaySelect(event: any) {
+    const day = event.target.value;
+    const isChecked = event.target.checked;
+
+    if (isChecked) {
+      this.newPlan.days.push(day);
+    } else {
+      const index = this.newPlan.days.indexOf(day);
+      if (index > -1) {
+        this.newPlan.days.splice(index, 1);
+      }
+    }
+  }
+
+  isFormValid(): boolean {
+    return this.newPlan.title !== '' &&
+           this.newPlan.recipes.length > 0 &&
+           this.newPlan.days.length > 0;
   }
 
   toggleAddPlanForm(): void {
     this.showAddPlanForm = true;
   }
 
-  // to be removed, only use when applying dummy data
-  async savePlan(): Promise<void> {
-    if (this.newPlan.title) {
-      const newDummyPlan: Plan = {
-        ...this.newPlan,
-        id: (this.plans.length + 1).toString(),
-        updatedAt: new Date(),
-      };
-
-      this.plans.push(newDummyPlan);
-      this.newPlan = { title: '', days: [], meals: [] };
-      this.showAddPlanForm = false;
+  async savePlan() {
+    if (this.isFormValid()) {
+      const userId = this.authService.getCurrentUserId();
+      if (userId) {
+        const plan: Plan = {
+          ...this.newPlan,
+          userId,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        };
+        await this.planService.addPlan(plan);
+        this.showAddPlanForm = false;
+        this.loadPlans();
+      }
     }
   }
-
-  // async savePlan(): Promise<void> {
-  //   if (this.newPlan.title) {
-  //     await this.planService.addPlan(this.newPlan);
-  //     this.newPlan = { title: '', days: [], meals: [] };
-  //     this.showAddPlanForm = false;
-  //     this.loadPlans();
-  //   }
-  // }
 }

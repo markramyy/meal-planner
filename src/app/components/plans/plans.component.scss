@@ -66,83 +66,117 @@
             .form-container {
                 display: flex;
                 flex-direction: column;
-                align-items: center;
-                background-color: #ffffff;
-                border-radius: 10px;
-                padding: 2rem;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                margin: auto;
-                height: 70%;
-                width: 60%;
 
                 .input-title {
-                    padding: 0.8rem;
+                    padding: 10px;
                     border: 1px solid #ddd;
                     border-radius: 5px;
-                    font-size: 1rem;
-                    margin-bottom: 2rem;
+                    font-size: 16px;
+                    margin-bottom: 15px;
                     width: 100%;
                 }
 
-                .section-container {
-                    margin-bottom: 1.5rem;
+                .recipe-selection {
+                    display: flex;
+                    gap: 10px;
+                    margin-bottom: 15px;
+
+                    select {
+                        flex: 1;
+                        padding: 10px;
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                    }
+
+                    button {
+                        padding: 10px 15px;
+                        border: none;
+                        background-color: #8bc34a;
+                        color: #fff;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        transition: background-color 0.3s ease;
+
+                        &:hover {
+                            background-color: #4caf50;
+                        }
+                    }
+                }
+
+                .days-selection {
+                    display: flex;
+                    gap: 10px;
+                    justify-content: center;
+                    margin-bottom: 20px;
+
+                    label {
+                        cursor: pointer;
+
+                        .day-chip {
+                            padding: 10px 15px;
+                            border-radius: 20px;
+                            border: 1px solid #8bc34a;
+                            background-color: #fff;
+                            color: #8bc34a;
+                            transition: all 0.3s ease;
+
+                            &:hover {
+                                background-color: #8bc34a;
+                                color: #fff;
+                            }
+
+                            &.active {
+                                background-color: #8bc34a;
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
+
+                .selected-recipes {
+                    margin-bottom: 15px;
 
                     h3 {
                         font-size: 1.2rem;
                         color: #333;
-                        margin-bottom: 0.8rem;
+                        margin-bottom: 10px;
                     }
 
-                    .days-selection,
-                    .meals-selection {
-                        display: flex;
-                        flex-wrap: wrap;
-                        gap: 0.8rem;
-
-                        label {
+                    .recipe-list {
+                        .recipe-item {
                             display: flex;
-                            align-items: center;
+                            justify-content: space-between;
+                            padding: 5px 10px;
+                            border: 1px solid #ddd;
+                            border-radius: 5px;
+                            margin-bottom: 5px;
 
-                            input {
-                                display: none;
+                            span {
+                                font-size: 14px;
                             }
 
-                            .day-chip,
-                            .meal-chip {
-                                display: inline-flex;
-                                align-items: center;
-                                justify-content: space-between;
-                                background-color: #8bc34a;
-                                color: white;
-                                padding: 0.5rem 1rem;
-                                border-radius: 20px;
-                                font-size: 0.9rem;
-                                font-weight: bold;
-
-                                .close-icon {
-                                    margin-left: 0.5rem;
-                                    font-weight: normal;
-                                    cursor: pointer;
-                                }
+                            button {
+                                background: none;
+                                border: none;
+                                color: #ff5252;
+                                cursor: pointer;
                             }
                         }
                     }
                 }
 
                 .submit-container {
-                    display: flex;
-                    justify-content: center;
-                    margin-top: 1.5rem;
+                    text-align: center;
 
                     .create-button {
                         background-color: #8bc34a;
                         color: white;
+                        padding: 10px 20px;
+                        font-size: 16px;
                         border: none;
                         border-radius: 5px;
-                        padding: 0.8rem 2rem;
-                        font-size: 1.1rem;
                         cursor: pointer;
-                        transition: background-color 0.3s;
+                        transition: background-color 0.3s ease;
 
                         &:hover {
                             background-color: #4caf50;
