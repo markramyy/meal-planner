@@ -1,0 +1,123 @@
+<div class="add-recipe-page-container">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Main Content -->
+  <div class="add-recipe-page">
+    <!-- Top Toolbar -->
+    <div class="toolbar">
+      <a routerLink="/recipes" class="back-link">&larr; My Recipe</a>
+      <button class="save-button" (click)="onSaveRecipe()">Save Recipe</button>
+    </div>
+
+    <!-- Recipe Form -->
+    <div class="recipe-form-container">
+      <div class="image-section">
+        <!-- Image Upload -->
+        <div class="image-upload">
+          <label for="image" class="upload-placeholder">
+            <img
+              *ngIf="imageFile"
+              [src]="imageFileUrl"
+              alt="Uploaded Image"
+              class="uploaded-image"
+            />
+            <span *ngIf="!imageFile" class="upload-icon">&#x1F4F7;</span>
+            <input
+              type="file"
+              id="image"
+              accept="image/jpeg,image/png,image/webp"
+              (change)="onImageSelected($event)"
+              title="Select an image (max 1MB, JPEG/PNG/WEBP only)"
+            />
+          </label>
+        </div>
+      </div>
+
+      <!-- Recipe Details -->
+      <div class="form-content">
+        <div class="form-group">
+          <label>Title</label>
+          <input
+            type="text"
+            [(ngModel)]="recipeTitle"
+            placeholder="Enter recipe title"
+            required
+          />
+        </div>
+
+        <div class="form-inline">
+          <div class="form-group">
+            <label>Time</label>
+            <input
+              type="number"
+              [(ngModel)]="time"
+              placeholder="0"
+              required
+            />
+            <span>Min</span>
+          </div>
+
+          <div class="form-group">
+            <label>Serving size</label>
+            <input
+              type="number"
+              [(ngModel)]="servings"
+              placeholder="0"
+              required
+            />
+            <span>Servings</span>
+          </div>
+        </div>
+
+        <!-- Meal Type Checkboxes -->
+        <div class="meal-types">
+          <label>Meal type</label>
+          <div class="meal-buttons">
+            <button
+              *ngFor="let type of mealTypes"
+              [class.active]="selectedMealTypes.includes(type)"
+              (click)="toggleMealType(type)"
+            >
+              {{ type }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Ingredients Modal -->
+        <div class="modal" *ngIf="showIngredientModal">
+          <div class="modal-content">
+            <h3>Add Ingredient</h3>
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" [(ngModel)]="newIngredient.name" placeholder="Ingredient name">
+            </div>
+            <div class="form-group">
+              <label>Quantity</label>
+              <input type="number" [(ngModel)]="newIngredient.quantity" placeholder="Amount">
+            </div>
+            <div class="modal-buttons">
+              <button (click)="addIngredient()">Add</button>
+              <button (click)="toggleIngredientModal()">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Update ingredients-section -->
+        <div class="ingredients-section">
+          <h3>Ingredients</h3>
+          <div *ngIf="ingredients.length === 0" class="ingredients-placeholder">
+            <img src="assets/images/empty-card.png" alt="No Ingredients" />
+            <p>No ingredients</p>
+          </div>
+          <ul *ngIf="ingredients.length > 0" class="ingredients-list">
+            <li *ngFor="let ingredient of ingredients">
+              {{ingredient.name}} - {{ingredient.quantity}}
+            </li>
+          </ul>
+          <button class="add-ingredients" (click)="toggleIngredientModal()">+ Add ingredients</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,75 @@
-<p>recipes works!</p>
+<div class="recipes-page-container">
+    <!-- Sidebar -->
+    <app-sidebar></app-sidebar>
+
+    <!-- Main Content -->
+    <div class="recipes-container">
+        <!-- Recipes Header -->
+        <div class="toolbar">
+            <!-- Tabs -->
+            <div class="tabs">
+              <span [class.active]="selectedTab === 'all'" (click)="switchTab('all')">
+                All Recipes
+              </span>
+              <span [class.active]="selectedTab === 'my'" (click)="switchTab('my')">
+                My Recipes
+              </span>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-container">
+              <input
+                type="text"
+                placeholder="Search recipes"
+                [(ngModel)]="searchQuery"
+                (input)="onSearch()"
+              />
+            </div>
+
+            <!-- Filter Button -->
+            <button class="filter-button">
+              <span class="material-icons">filter_alt</span>
+              Filter
+            </button>
+
+            <!-- Add Recipes Button -->
+            <button class="add-button" routerLink="/recipes/add">
+              + Add recipes
+            </button>
+        </div>
+
+        <!-- Recipes List -->
+        <div *ngIf="filteredRecipes.length > 0; else noRecipes">
+            <div class="recipes-list">
+            <div *ngFor="let recipe of filteredRecipes" class="recipe-card">
+                <img
+                  [src]="getRecipeImage(recipe)"
+                  [alt]="recipe.title"
+                  (error)="handleImageError($event)"
+                />
+                <h3>{{ recipe.title }}</h3>
+                <p>
+                ⏱ {{ recipe.time }} minutes · 🥘 {{ recipe.ingredientsCount }}
+                ingredients
+                </p>
+                <div class="actions">
+                <span>❤️ Like</span>
+                <span>📝 Review</span>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- No Recipes Template -->
+        <ng-template #noRecipes>
+            <div class="no-recipes">
+            <div class="no-recipes-content">
+                <img src="assets/images/empty-card.png" alt="No Recipes" />
+                <h2>No Recipes</h2>
+                <p>Looks like you haven't added any recipes yet.</p>
+                <button routerLink="/recipes/add" class="primary-button">+ Add Recipes</button>
+            </div>
+            </div>
+        </ng-template>
+    </div>
+</div>

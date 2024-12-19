@@ -43,7 +43,6 @@ export class AuthService {
     return this.firebaseAuth.logout();
   }
 
-  // Fetch the current authenticated user's data from Firestore
   async getUserData(): Promise<any> {
     const currentUser = this.auth.currentUser;
     if (!currentUser) {
@@ -62,6 +61,10 @@ export class AuthService {
 
   getCurrentUserEmail(): string | null {
     return this.auth.currentUser ? this.auth.currentUser.email : null;
+  }
+
+  getCurrentUserId(): string | null {
+    return this.auth.currentUser ? this.auth.currentUser.uid : null;
   }
 
 }
