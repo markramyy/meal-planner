@@ -95,6 +95,14 @@
               background-color: #ccc;
               cursor: not-allowed;
             }
+
+            &.unfollow {
+              background-color: #ff5252;
+
+              &:hover {
+                background-color: #d32f2f;
+              }
+            }
           }
         }
       }

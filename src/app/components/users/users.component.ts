@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { UserService } from '../../services/user.service';
-import { User } from '../../models/user.model';
+import { User } from '../../models/users-follow';
 import { AuthService } from '../../services/auth.service';
 
 
@@ -38,11 +38,18 @@ export class UsersComponent implements OnInit {
 
   async fetchUsers() {
     try {
-      const allUsers = await this.userService.getAllUsers();
+      const [allUsers, followedUsers] = await Promise.all([
+        this.userService.getAllUsers(),
+        this.userService.getFollowedUsers()
+      ]);
 
-      // Filter out the authenticated user
-      this.users = allUsers.filter(user => user.email !== this.currentUserEmail);
-      this.filteredUsers = [...this.users]; // Initialize filteredUsers
+      this.users = allUsers
+        .filter(user => user.uid !== this.authService.getCurrentUserId())
+        .map(user => ({
+          ...user,
+          isFollowed: followedUsers.includes(user.uid)
+        }));
+      this.filteredUsers = [...this.users];
       this.loading = false;
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -60,10 +67,17 @@ export class UsersComponent implements OnInit {
     );
   }
 
-  onFollow(user: User) {
-    console.log('Following user:', user.email);
-    this.userService.followUser(user.email).then(() => {
-      console.log(`Followed ${user.email}`);
-    });
+  async onFollow(user: User) {
+    try {
+      if (user.isFollowed) {
+        await this.userService.unfollowUser(user.uid);
+        user.isFollowed = false;
+      } else {
+        await this.userService.followUser(user.uid);
+        user.isFollowed = true;
+      }
+    } catch (error) {
+      console.error('Error following/unfollowing user:', error);
+    }
   }
 }

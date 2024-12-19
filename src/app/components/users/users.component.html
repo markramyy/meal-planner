@@ -27,10 +27,11 @@
           </div>
           <button
             class="add-button"
+            [class.unfollow]="user.isFollowed"
             (click)="onFollow(user)"
             [disabled]="user.email === currentUserEmail"
           >
-            + Add
+            {{ user.isFollowed ? '- Unfollow' : '+ Add' }}
           </button>
         </div>
       </div>
